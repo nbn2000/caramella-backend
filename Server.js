@@ -11,6 +11,8 @@ app.use(express.json());
 // app.use(auth);
 app.use(rt);
 
+app.get("/", (req, res) => res.send("welcome to caramella backend"));
+
 app.listen(port, () =>
   console.log(`Server started on http://localhost${port}`)
 );
