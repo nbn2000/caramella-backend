@@ -1,7 +1,5 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const username = process.env.MONGODBUSERNAME;
-const password = process.env.MONGODBPASSWORD;
-const uri = `mongodb+srv://${username}:${password}@caramella.i9b4jre.mongodb.net/?retryWrites=true&w=majority`;
+const uri = process.env.MONGODBURI;
 
 const config = new MongoClient(uri, {
   serverApi: {

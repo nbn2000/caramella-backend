@@ -14,5 +14,3 @@ app.use(rt);
 app.listen(port, () =>
   console.log(`Server started on http://localhost${port}`)
 );
-
-//https://api.telegram.org/bot6936158240:AAEjqwLnzwTMz6RWhxUUBr47kJDQYUUNyvc/setWebhook?url=https://e1d8-213-230-69-2.ngrok-free.app/api/v1/telegram
