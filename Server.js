@@ -13,7 +13,6 @@ app.use(rt);
 
 app.get("/", (req, res) => res.send("welcome to caramella backend"));
 
-app.get("/", (req, res) => res.send("welcome to caramella backend"));
 app.listen(port, () =>
   console.log(`Server started on http://localhost${port}`)
 );
