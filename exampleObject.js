@@ -26,13 +26,44 @@ const vacancy = [
 
 //cart
 
-const cart = [
+//send first requiest
+
+const firstcart = [
   {
-    name: string,
-    phoneNumber: string,
-    userName: string,
+    user: {
+      _id: string,
+      name: string,
+      phoneNumber: string,
+      userName: string,
+    },
     cart: [
       {
+        _id: string,
+        name: string,
+        description: string,
+        category: string,
+        price: string,
+        file: string,
+        files: [string],
+        property: [{ value: string }],
+        amount: number,
+      },
+    ],
+  },
+];
+
+const cart = [
+  {
+    user: {
+      _id: string,
+      name: string,
+      phoneNumber: string,
+      userName: string,
+    },
+    totalPrice: string,
+    cart: [
+      {
+        _id: string,
         name: string,
         description: string,
         category: string,
@@ -48,11 +79,15 @@ const cart = [
 
 const order = [
   {
-    name: string,
-    phoneNumber: string,
-    userName: string,
+    user: {
+      _id: string,
+      name: string,
+      phoneNumber: string,
+      userName: string,
+    },
     cart: [
       {
+        _id: string,
         name: string,
         description: string,
         category: string,

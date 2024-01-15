@@ -1,11 +1,6 @@
 const tokenService = require("../services/token.service");
 
 const auth = async (req, res, next) => {
-  const path = req.path;
-  if (path === "/signin" || path === "/signup") {
-    return next();
-  }
-
   try {
     const token = req?.headers?.authorization?.split(" ").pop() || null;
     if (!token) {

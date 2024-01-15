@@ -42,4 +42,17 @@ rt.put("/api/edit/vacancy", [validation.Vacancy], vacancyControll.editVacancy);
 rt.delete("/api/delete/vacancy", vacancyControll.deleteVacancy);
 rt.get("/api/getall/vacancy", vacancyControll.getAllVacancy);
 
+/* CART CONTROLL */
+const cartControll = require("./controller/cart.controll");
+
+rt.post("/api/add/cart", cartControll.addToCart);
+rt.post("/api/get/cart", cartControll.getCart);
+rt.post("/api/change/cart/amount", cartControll.changeCartAmount);
+rt.delete("/api/delete/cart/item", cartControll.deleteCartItem);
+
+/* ORDER CONTROLL */
+const orderControll = require("./controller/order.controll");
+
+rt.post("/api/get/order", orderControll.getOrder);
+
 module.exports = rt;
