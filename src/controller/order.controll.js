@@ -2,12 +2,8 @@ const db = require("../config.mongodb");
 const { ObjectId } = require("mongodb");
 const response = require("../services/response.service");
 const nodemailer = require("nodemailer");
-const login = process.env.LOGINGOOGLEACCOUNT;
-const password = process.env.PASSWORDGOOGLEACCOUNT;
 const crypto = require("crypto");
 
-const product = db.collection("product");
-const cart = db.collection("cart");
 const orders = db.collection("orders");
 
 class OrderControll {
@@ -32,8 +28,8 @@ class OrderControll {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: login,
-          pass: password,
+          user: process.env.LOGINGOOGLEACCOUNT,
+          pass: process.env.PASSWORDGOOGLEACCOUNT,
         },
       });
       const info = await transporter.sendMail({
