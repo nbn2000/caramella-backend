@@ -54,5 +54,8 @@ rt.delete("/api/delete/cart/item", cartControll.deleteCartItem);
 const orderControll = require("./controller/order.controll");
 
 rt.post("/api/get/order", orderControll.getOrder);
+rt.get("/api/get/all-orders", orderControll.getAllOrders);
+rt.post("/api/change-checked/order", orderControll.toggleCheckedOrder);
+rt.post("/api/change-given/order", orderControll.toggleGivenOrder);
 
 module.exports = rt;
