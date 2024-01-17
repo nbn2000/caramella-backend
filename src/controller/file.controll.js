@@ -16,7 +16,10 @@ class FileController {
   handleResponse(res, promise) {
     promise
       .then((result) => response.success(res, undefined, result))
-      .catch((err) => response.internal(res, undefined, err));
+      .catch((err) => {
+        response.internal(res, undefined, err);
+        console.log(err);
+      });
   }
 
   // UPLOAD NEW SINGLE IMAGE
@@ -31,6 +34,7 @@ class FileController {
 
   // DELETE SINGLE IMAGE
   deleteImage(req, res) {
+    console.log("id", req.body);
     this.handleResponse(res, FileService.deleteImage(req?.body?.id));
   }
 

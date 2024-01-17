@@ -16,11 +16,9 @@ class jwtService {
   async verifyToken(token) {
     return new Promise(async (resolve, reject) => {
       try {
-        const data = await jwt.verify(token, "23rfsd34t-efdfsfd32");
-        console.log("data", data);
+        const data = await jwt.verify(token, key);
         resolve(data);
       } catch (err) {
-        console.log(err);
         reject(err);
       }
     });

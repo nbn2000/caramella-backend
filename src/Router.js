@@ -7,6 +7,7 @@ const userControll = require("./controller/user.controll");
 rt.post("/api/add/user", userControll.signup);
 rt.delete("/api/delete/user", userControll.deleteUser);
 rt.get("/api/getall/user", userControll.getAllUser);
+rt.post("/api/admin/login", userControll.adminSignin);
 
 /* TELEGRAM BOT CONTROLL */
 const bot = require("./controller/telegramBot");

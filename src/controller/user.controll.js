@@ -4,6 +4,7 @@ const { ObjectId } = require("mongodb");
 
 const telegram_bot_token = db.collection("telegram_bot_token");
 const user = db.collection("users");
+const admin = db.collection("admin");
 
 class userControll {
   /* ADD NEW USER */
@@ -22,6 +23,24 @@ class userControll {
       }
     } catch (err) {
       response.internal(res, err);
+    }
+  }
+
+  /* ADMIN LOGIN */
+  async adminSignin(req, res) {
+    try {
+      const data = req.body;
+      const login = await admin.findOne({ login: data.login });
+      if (login.password === data.password) {
+        response.success(res, undefined, {
+          token: "r9283ry9fhssod9ufhs9daf8u0a98suf098u43",
+        });
+      } else {
+        response.notFound(res);
+      }
+    } catch (err) {
+      response.internal(res, undefined, err);
+      console.log(err);
     }
   }
 
