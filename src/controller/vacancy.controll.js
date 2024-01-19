@@ -23,6 +23,7 @@ class VacancyControll {
       const id = data._id; // Im first defining id given from mongodb
       delete data._id; // then deleting because mongodb ids are immutable
       await vacancy.updateOne(...[{ _id: new ObjectId(id) }, { $set: data }]);
+      console.log(res);
       response.success(res, undefined, null);
     } catch (err) {
       response.internal(res, undefined, err);
@@ -46,6 +47,21 @@ class VacancyControll {
       const data = await vacancy.find().toArray();
       response.success(res, undefined, { data });
     } catch (err) {
+      response.internal(res, undefined, err);
+    }
+  }
+
+  /* GET SINGLE VACANCY */
+  async getSingleVacancy(req, res) {
+    try {
+      const { id } = req.params;
+      const data = await vacancy.findOne({ _id: new ObjectId(id) });
+      if (data === null) {
+        response.notFound(res);
+      }
+      response.success(res, undefined, data);
+    } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }

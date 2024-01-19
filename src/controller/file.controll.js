@@ -34,7 +34,6 @@ class FileController {
 
   // DELETE SINGLE IMAGE
   deleteImage(req, res) {
-    console.log("id", req.body);
     this.handleResponse(res, FileService.deleteImage(req?.body?.id));
   }
 

@@ -112,7 +112,6 @@ class CartControll {
         const result = await cart.findOne({ device_id: data?.device_id });
         response.success(res, "success", result);
       }
-      console.log(result);
     } catch (err) {
       console.log(err);
       response.internal(res, undefined, err);

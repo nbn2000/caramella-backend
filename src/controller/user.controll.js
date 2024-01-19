@@ -48,7 +48,6 @@ class userControll {
   async deleteUser(req, res) {
     try {
       const { _id } = req.body;
-      console.log(_id);
       await user.deleteOne({ _id: new ObjectId(_id) });
       response.success(res, "Фойдаланувчи мувофақиятли ўчирилди");
     } catch (err) {

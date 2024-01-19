@@ -67,7 +67,6 @@ class FileService {
   // DELETE SINGLE IMAGE
   async deleteImage(id) {
     const urls = await this.deleteImageFromM(id);
-    console.log(id);
     if (urls && urls.length > 0) {
       const fileRef = ref(storage, urls[0]);
       await deleteObject(fileRef);

@@ -43,6 +43,7 @@ rt.post("/api/add/vacancy", [validation.Vacancy], vacancyControll.addVacancy);
 rt.put("/api/edit/vacancy", [validation.Vacancy], vacancyControll.editVacancy);
 rt.delete("/api/delete/vacancy", vacancyControll.deleteVacancy);
 rt.get("/api/getall/vacancy", vacancyControll.getAllVacancy);
+rt.get("/api/getsingle/vacancy/:id", vacancyControll.getSingleVacancy);
 
 /* CART CONTROLL */
 const cartControll = require("./controller/cart.controll");
