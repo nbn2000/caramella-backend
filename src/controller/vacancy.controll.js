@@ -35,7 +35,7 @@ class VacancyControll {
     try {
       const { _id } = req.body;
       await vacancy.deleteOne({ _id: new ObjectId(_id) });
-      response.success(res, undefined, null);
+      response.success(res);
     } catch (err) {
       response.internal(res, undefined, err);
     }
