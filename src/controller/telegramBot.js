@@ -47,6 +47,7 @@ class TelegramBotFunc {
     const passcodeChecked = await telegram_bot_token.findOne({ userName });
     if (phoneNumber !== undefined) {
       if (checkUserExist === null && passcodeChecked === null) {
+        const dateToday = new Date().toLocaleDateString();
         bot.sendMessage(
           req.body.message.from.id,
           `Sizning codingiz: \`${randomPin}\``,
@@ -70,7 +71,7 @@ class TelegramBotFunc {
             name: name,
             phoneNumber: phoneNumber,
             userName: userName,
-            createdAt: new Date().toLocaleDateString(),
+            createdAt: dateToday,
           });
         } catch (err) {
           console.log(err);
