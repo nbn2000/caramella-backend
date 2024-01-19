@@ -70,7 +70,7 @@ class TelegramBotFunc {
             name: name,
             phoneNumber: phoneNumber,
             userName: userName,
-            createdAt: new Date(),
+            createdAt: new Date().toLocaleDateString(),
           });
         } catch (err) {
           console.log(err);
