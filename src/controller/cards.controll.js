@@ -22,10 +22,17 @@ class CardsControll {
       const data = req.body;
       const id = data._id; // Im first defining id given from mongodb
       delete data._id; // then deleting because mongodb ids are immutable
-      await product.updateOne(...[{ _id: new ObjectId(id) }, { $set: data }]);
-      response.success(res, undefined, null);
+      const result = await product.updateOne(
+        ...[{ _id: new ObjectId(id) }, { $set: data }]
+      );
+      if (result.modifiedCount === 0) {
+        response.notFound(res);
+      } else {
+        response.success(res, undefined, null);
+      }
     } catch (err) {
       response.internal(res, undefined, err);
+      console.log(err);
     }
   }
 
@@ -72,6 +79,20 @@ class CardsControll {
       const data = await product.find().toArray();
       response.success(res, undefined, { data });
     } catch (err) {
+      response.internal(res, undefined, err);
+    }
+  }
+
+  async getSingleCard(req, res) {
+    try {
+      const { id } = req.params;
+      const data = await product.findOne({ _id: new ObjectId(id) });
+      if (data === null) {
+        response.notFound(res);
+      }
+      response.success(res, undefined, data);
+    } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }

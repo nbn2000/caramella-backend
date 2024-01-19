@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(rt);
 
 app.get("/", async (req, res) => {
+  // await db.collection("product").deleteMany();
   res.send("Wrong website please check again");
 });
 

@@ -34,6 +34,7 @@ rt.put("/api/edit/card", [validation.Card], cardsControll.editCard);
 rt.delete("/api/delete/card", cardsControll.deleteCard);
 rt.get("/api/pagination/card", cardsControll.getByPaginationAndCategoryCard);
 rt.get("/api/getall/card", cardsControll.getAllCard);
+rt.get("/api/getsingle/card/:id", cardsControll.getSingleCard);
 
 /* VACANCY CONTROLL */
 const vacancyControll = require("./controller/vacancy.controll");
