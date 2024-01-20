@@ -12,6 +12,7 @@ class userControll {
     try {
       const { passCode } = req?.body;
       const checkPassCode = await telegram_bot_token.findOne({ passCode });
+
       if (checkPassCode !== null) {
         const userNameFromPassCode = checkPassCode?.userName;
         const userInfo = await user.findOne({
@@ -31,7 +32,7 @@ class userControll {
     try {
       const data = req.body;
       const login = await admin.findOne({ login: data.login });
-      if (login.password === data.password) {
+      if (login !== null) {
         response.success(res, undefined, {
           token: "r9283ry9fhssod9ufhs9daf8u0a98suf098u43",
         });
