@@ -57,7 +57,7 @@ rt.delete("/api/delete/cart/item", cartControll.deleteCartItem);
 const orderControll = require("./controller/order.controll");
 
 rt.post("/api/get/order", orderControll.getOrder);
-rt.post("/api/get/all-orders", orderControll.getAllOrders);
+rt.get("/api/get/all-orders/:given", orderControll.getAllOrders);
 rt.post("/api/change-checked/order", orderControll.toggleCheckedOrder);
 rt.post("/api/change-given/order", orderControll.toggleGivenOrder);
 rt.get("/api/get/single-order/:id", orderControll.getSingleOrder);

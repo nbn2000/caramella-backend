@@ -57,8 +57,8 @@ class OrderControll {
   /* GET ALL ORDERS TO ADMIN */
   async getAllOrders(req, res) {
     try {
-      const { given } = req.body;
-      const data = await orders.find({ given: given }).toArray();
+      const { given } = req.params;
+      const data = await orders.find({ given: JSON.parse(given) }).toArray();
       if (data === null) {
         response.notFound(res);
       } else {
