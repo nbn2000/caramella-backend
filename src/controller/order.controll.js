@@ -57,8 +57,29 @@ class OrderControll {
   /* GET ALL ORDERS TO ADMIN */
   async getAllOrders(req, res) {
     try {
-      const data = await orders.find().toArray();
-      response.success(res, undefined, { data });
+      const { given } = req.body;
+      const data = await orders.find({ given: given }).toArray();
+      if (data === null) {
+        response.notFound(res);
+      } else {
+        response.success(res, undefined, data);
+      }
+    } catch (err) {
+      response.internal(res, undefined, err);
+      console.log(err);
+    }
+  }
+
+  /* GET GET SINGLE ORDER TO ADMIN */
+  async getSingleOrder(req, res) {
+    try {
+      const { id } = req.params;
+      const data = await product.findOne({ _id: new ObjectId(id) });
+      if (data === null) {
+        response.notFound(res);
+      } else {
+        response.success(res, undefined, data);
+      }
     } catch (err) {
       response.internal(res, undefined, err);
       console.log(err);

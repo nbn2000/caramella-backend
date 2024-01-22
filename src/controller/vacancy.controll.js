@@ -45,7 +45,11 @@ class VacancyControll {
   async getAllVacancy(req, res) {
     try {
       const data = await vacancy.find().toArray();
-      response.success(res, undefined, { data });
+      if (data === null) {
+        response.notFound(res);
+      } else {
+        response.success(res, undefined, { data });
+      }
     } catch (err) {
       response.internal(res, undefined, err);
     }
@@ -58,8 +62,9 @@ class VacancyControll {
       const data = await vacancy.findOne({ _id: new ObjectId(id) });
       if (data === null) {
         response.notFound(res);
+      } else {
+        response.success(res, undefined, data);
       }
-      response.success(res, undefined, data);
     } catch (err) {
       console.log(err);
       response.internal(res, undefined, err);

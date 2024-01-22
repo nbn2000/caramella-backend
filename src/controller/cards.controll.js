@@ -77,7 +77,11 @@ class CardsControll {
   async getAllCard(req, res) {
     try {
       const data = await product.find().toArray();
-      response.success(res, undefined, { data });
+      if (data === null) {
+        response.notFound(res);
+      } else {
+        response.success(res, undefined, { data });
+      }
     } catch (err) {
       response.internal(res, undefined, err);
     }
