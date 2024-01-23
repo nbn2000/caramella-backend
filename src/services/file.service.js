@@ -53,7 +53,6 @@ class FileService {
 
   // DELETE SINGLE IMAGE
   async deleteImage(url) {
-    console.log(url);
     if (url === undefined || url === null) {
       return "File not found";
     } else {
