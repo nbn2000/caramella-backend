@@ -90,15 +90,20 @@ class OrderControll {
   async toggleCheckedOrder(req, res) {
     try {
       const { _id } = req.body;
-      const order = await orders.findOne({ _id: new ObjectId(_id) });
-      if (!order) {
+      const change = await orders.updateOne(
+        { _id: new ObjectId(_id) },
+        { $set: { checked: true } }
+      );
+      if (change.acknowledged !== 0) {
+        const data = await orders.findOne({ _id: new ObjectId(_id) });
+        if (data !== null) {
+          return response.success(res, undefined, data);
+        } else {
+          return response.notFound(res, "Order not found");
+        }
+      } else {
         return response.notFound(res, "Order not found");
       }
-      await orders.updateOne(
-        { _id: new ObjectId(_id) },
-        { $set: { checked: !order.checked } }
-      );
-      response.success(res);
     } catch (err) {
       response.internal(res, undefined, err);
       console.log(err);
@@ -109,14 +114,15 @@ class OrderControll {
   async toggleGivenOrder(req, res) {
     try {
       const { _id } = req.body;
-      const order = await orders.findOne({ _id: new ObjectId(_id) });
-      if (!order) {
+      const change = await orders.updateOne(
+        { _id: new ObjectId(_id) },
+        { $set: { given: true } }
+      );
+      if (change.acknowledged !== 0) {
+        return response.success(res);
+      } else {
         return response.notFound(res, "Order not found");
       }
-      await orders.updateOne(
-        { _id: new ObjectId(_id) },
-        { $set: { given: !order.given } }
-      );
       response.success(res);
     } catch (err) {
       response.internal(res, undefined, err);

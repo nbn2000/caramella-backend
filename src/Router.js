@@ -58,8 +58,8 @@ const orderControll = require("./controller/order.controll");
 
 rt.post("/api/get/order", orderControll.getOrder);
 rt.get("/api/get/all-orders/:given", orderControll.getAllOrders);
-rt.post("/api/change-checked/order", orderControll.toggleCheckedOrder);
-rt.post("/api/change-given/order", orderControll.toggleGivenOrder);
+rt.put("/api/change-checked/order", orderControll.toggleCheckedOrder);
+rt.put("/api/change-given/order", orderControll.toggleGivenOrder);
 rt.get("/api/get/single-order/:id", orderControll.getSingleOrder);
 
 module.exports = rt;
