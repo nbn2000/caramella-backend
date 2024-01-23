@@ -8,7 +8,7 @@ class CardsControll {
   async addCard(req, res) {
     try {
       const data = req.body;
-
+      data.createdAt = new Date();
       await product.updateOne(data, { $set: data }, { upsert: true }); // I have used updateOne instead of insertOne because it will prevent dublicate insertion but properies uniqueness will not effact
       response.success(res, "Махсулот муофақиятли яратилди", undefined);
     } catch (err) {

@@ -8,30 +8,11 @@ const {
 } = require("firebase/storage");
 const sharp = require("sharp");
 const firebaseConfig = require("../config.firebase");
-const db = require("../config.mongodb");
-const images = db.collection("images");
-const crypto = require("crypto");
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage();
 
 class FileService {
-  // Helper function to insert docs to mongodb
-  async uploadImagesToM(downloadURL) {
-    const id = crypto.randomBytes(8).toString("hex");
-    await images.insertOne({
-      id,
-      url: downloadURL,
-    });
-    return id;
-  }
-  // Helper function to insert docs to mongodb
-  async deleteImageFromM(id) {
-    const URLS = await images.findOne({ id });
-    await images.deleteOne({ id });
-    return URLS?.url;
-  }
-
   // Helper function to resize and upload a single image
   async resizeAndUploadImage(file) {
     const { buffer, originalname, mimetype } = file;
@@ -50,64 +31,77 @@ class FileService {
 
   // UPLOAD NEW SINGLE IMAGE
   async uploadImage(file) {
-    const downloadURL = await this.resizeAndUploadImage(file);
-    const id = await this.uploadImagesToM(Array(downloadURL));
-    return { id, url: downloadURL };
+    if (file === undefined || file === null) {
+      return "file is not found";
+    } else {
+      const downloadURL = await this.resizeAndUploadImage(file);
+      return downloadURL;
+    }
   }
 
   // UPLOAD NEW MULTIPLE IMAGES
   async uploadImages(files) {
-    const uploadTasks =
-      files?.map((file) => this.resizeAndUploadImage(file)) || [];
-    const downloadURLs = await Promise.all(uploadTasks);
-    const id = await this.uploadImagesToM(downloadURLs);
-    return { id, url: downloadURLs };
+    if (files === undefined || files === null) {
+      return "file is not found";
+    } else {
+      const uploadTasks =
+        files?.map((file) => this.resizeAndUploadImage(file)) || [];
+      const downloadURLs = await Promise.all(uploadTasks);
+      return downloadURLs;
+    }
   }
 
   // DELETE SINGLE IMAGE
-  async deleteImage(id) {
-    const urls = await this.deleteImageFromM(id);
-    if (urls && urls.length > 0) {
-      const fileRef = ref(storage, urls[0]);
+  async deleteImage(url) {
+    console.log(url);
+    if (url === undefined || url === null) {
+      return "File not found";
+    } else {
+      const fileRef = ref(storage, url);
       await deleteObject(fileRef);
       return "File deleted successfully";
-    } else {
-      throw new Error("Image not found in database");
     }
   }
 
   // DELETE MULTIPLE IMAGES
-  async deleteImages(id) {
-    const urls = await this.deleteImageFromM(id);
-    if (urls && urls.length > 0) {
-      const deleteTasks = urls.map((cdnURL) => {
+  async deleteImages(url) {
+    if (url === undefined || url === null) {
+      return "File not found";
+    } else {
+      const deleteTasks = url.map((cdnURL) => {
         const fileRef = ref(storage, cdnURL);
         return deleteObject(fileRef);
       });
       await Promise.all(deleteTasks);
-      return { message: "Files deleted successfully" };
-    } else {
-      throw new Error("Image not found in database");
+      return "Files deleted successfully";
     }
   }
 
   // EDIT SINGLE IMAGE
-  async editImage(file, id) {
-    if (id === undefined || id === null) {
-      return this.uploadImage(file);
+  async editImage(file, url) {
+    if (file === null || file === undefined) {
+      return "file is not found";
     } else {
-      await this.deleteImage(id);
-      return this.uploadImage(file);
+      if (url === undefined || url === null) {
+        return this.uploadImage(file);
+      } else {
+        await this.deleteImage(url);
+        return this.uploadImage(file);
+      }
     }
   }
 
   // EDIT MULTIPLE IMAGES
-  async editImages(files, id) {
-    if (id === undefined || id === null) {
-      return this.uploadImages(files);
+  async editImages(files, url) {
+    if (files === undefined || files === null) {
+      return "file is not found";
     } else {
-      await this.deleteImages(id);
-      return this.uploadImages(files);
+      if (url === undefined || url === null) {
+        return this.uploadImages(files);
+      } else {
+        await this.deleteImages(url);
+        return this.uploadImages(files);
+      }
     }
   }
 }

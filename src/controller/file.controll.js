@@ -34,22 +34,25 @@ class FileController {
 
   // DELETE SINGLE IMAGE
   deleteImage(req, res) {
-    this.handleResponse(res, FileService.deleteImage(req?.body?.id));
+    this.handleResponse(res, FileService.deleteImage(req?.body?.url));
   }
 
   // DELETE MULTIPLE IMAGES
   deleteImages(req, res) {
-    this.handleResponse(res, FileService.deleteImages(req?.body?.id));
+    this.handleResponse(res, FileService.deleteImages(req?.body?.url));
   }
 
   // EDIT SINGLE IMAGE
   editImage(req, res) {
-    this.handleResponse(res, FileService.editImage(req?.file, req?.body?.id));
+    this.handleResponse(res, FileService.editImage(req?.file, req?.body?.url));
   }
 
   // EDIT MULTIPLE IMAGES
   editImages(req, res) {
-    this.handleResponse(res, FileService.editImages(req?.files, req?.body?.id));
+    this.handleResponse(
+      res,
+      FileService.editImages(req?.files, req?.body?.url)
+    );
   }
 }
 
