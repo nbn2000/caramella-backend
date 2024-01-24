@@ -4,6 +4,8 @@ const user = [{ name: string, phoneNumber: string, userName: string }];
 //products
 const product = [
   {
+    _id: string,
+    createdAt: isoDate,
     name: string,
     description: string,
     category: string,

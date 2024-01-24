@@ -5,6 +5,8 @@ const { ObjectId } = require("mongodb");
 const telegram_bot_token = db.collection("telegram_bot_token");
 const user = db.collection("users");
 const admin = db.collection("admin");
+const device = db.collection("device");
+const crypto = require("crypto");
 
 class userControll {
   /* ADD NEW USER */
@@ -61,6 +63,23 @@ class userControll {
       const data = await user.find().toArray();
       response.success(res, undefined, { data });
     } catch (err) {
+      response.internal(res, undefined, err?.message);
+    }
+  }
+
+  /* SINGUP DEVICE */
+
+  async singupDevice(req, res) {
+    try {
+      const device_id = crypto.randomBytes(8).toString("hex");
+      const token = crypto.randomBytes(4).toString("hex");
+      await device.insertOne({ device_id });
+      response.success(res, undefined, {
+        device_id: JSON.stringify(device_id),
+        token: JSON.stringify(token),
+      });
+    } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }

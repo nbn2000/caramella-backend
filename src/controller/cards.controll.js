@@ -90,6 +90,7 @@ class CardsControll {
   async getSingleCard(req, res) {
     try {
       const { id } = req.params;
+      console.log(id);
       const data = await product.findOne({ _id: new ObjectId(id) });
       if (data === null) {
         response.notFound(res);
@@ -98,6 +99,21 @@ class CardsControll {
     } catch (err) {
       console.log(err);
       response.internal(res, undefined, err);
+    }
+  }
+
+  async getNewCardThree(req, res) {
+    try {
+      const dateSevenDaysAgo = new Date();
+      dateSevenDaysAgo.setDate(dateSevenDaysAgo.getDate() - 7); //seven days subtructed from today
+
+      const filter = { createdAt: { $gte: dateSevenDaysAgo } }; //filter to check if its later then sevendays before from today
+
+      const data = await product.find(filter).limit(3).toArray();
+      response.success(res, undefined, data);
+    } catch (error) {
+      console.log(error);
+      response.internal(res, undefined, error);
     }
   }
 }

@@ -8,6 +8,7 @@ rt.post("/api/add/user", userControll.signup);
 rt.delete("/api/delete/user", userControll.deleteUser);
 rt.get("/api/getall/user", userControll.getAllUser);
 rt.post("/api/admin/login", userControll.adminSignin);
+rt.get("/api/singup/device", userControll.singupDevice);
 
 /* TELEGRAM BOT CONTROLL */
 const bot = require("./controller/telegramBot");
@@ -35,6 +36,7 @@ rt.delete("/api/delete/card", cardsControll.deleteCard);
 rt.get("/api/pagination/card", cardsControll.getByPaginationAndCategoryCard);
 rt.get("/api/getall/card", cardsControll.getAllCard);
 rt.get("/api/getsingle/card/:id", cardsControll.getSingleCard);
+rt.get("/api/getnew/card/3", cardsControll.getNewCardThree);
 
 /* VACANCY CONTROLL */
 const vacancyControll = require("./controller/vacancy.controll");
