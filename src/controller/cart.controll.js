@@ -45,8 +45,9 @@ class CartControll {
   /* GET SELECTED CART*/
   async getCart(req, res) {
     try {
-      const { device_id } = req.body;
-      const searchResult = await cart.findOne({ device_id });
+      const { device_id } = req.params;
+      const searchResult = await cart.findOne({ device_id: String(device_id) });
+      console.log(searchResult);
       if (!searchResult) {
         response.notFound(res, "Махсулот топилмади", undefined);
         return;
@@ -54,6 +55,7 @@ class CartControll {
       response.success(res, "Махсулот муофақиятли яратилди", searchResult);
     } catch (err) {
       response.internal(res, undefined, err);
+      console.log(err);
     }
   }
   /* CHANGE CART AMOUNT*/

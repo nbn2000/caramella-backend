@@ -51,8 +51,8 @@ rt.get("/api/getsingle/vacancy/:id", vacancyControll.getSingleVacancy);
 const cartControll = require("./controller/cart.controll");
 
 rt.post("/api/add/cart", cartControll.addToCart);
-rt.post("/api/get/cart", cartControll.getCart);
-rt.post("/api/change/cart/amount", cartControll.changeCartAmount);
+rt.get("/api/get/cart/:device_id", cartControll.getCart);
+rt.patch("/api/change/cart/amount", cartControll.changeCartAmount);
 rt.delete("/api/delete/cart/item", cartControll.deleteCartItem);
 
 /* ORDER CONTROLL */
