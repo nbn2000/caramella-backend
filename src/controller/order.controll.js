@@ -45,6 +45,8 @@ class OrderControll {
       //INSERT TO MONGODB
       data.orderedDate = new Date().toLocaleString();
       data.orderNumber = crypto.randomBytes(4).toString("hex");
+      data.checked = false;
+      data.given = false;
       await orders.insertOne(data);
       response.success(res, "Махсулот муофақиятли яратилди", {
         orderNumber: data?.orderNumber,
