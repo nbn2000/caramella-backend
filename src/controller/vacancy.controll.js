@@ -2,6 +2,8 @@ const db = require("../config.mongodb");
 const { ObjectId } = require("mongodb");
 const response = require("../services/response.service");
 const vacancy = db.collection("vacancy");
+const nodemailer = require("nodemailer");
+const applied_people = db.collection("applied_people");
 
 class VacancyControll {
   /* ADD NEW VACANCY */
@@ -68,6 +70,48 @@ class VacancyControll {
     } catch (err) {
       console.log(err);
       response.internal(res, undefined, err);
+    }
+  }
+
+  async appliedVacancy(req, res) {
+    try {
+      const data = await req.body;
+      //SEND DATA TO EMAIL
+      const vacancyData = await vacancy.findOne({
+        _id: new ObjectId(data.vacancyId),
+      });
+      console.log(vacancyData);
+      if (!vacancyData) {
+        return response.notFound(
+          res,
+          "Кечирасиз бу вакансияга хозирча ишга ололмаймиз"
+        );
+      }
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.LOGINGOOGLEACCOUNT,
+          pass: process.env.PASSWORDGOOGLEACCOUNT,
+        },
+      });
+      const info = await transporter.sendMail({
+        from: "nbnproduction2100@gmail.com",
+        to: "caramella4474@gmail.com",
+        subject: String(
+          `${data?.fullName} дан ${vacancyData?.vacancyName} ишга топшириш `
+        ),
+        text: String(data?.description),
+        html: `<h1>${data?.fullName}</h1> </br> <h3>Сиздан ${vacancyData?.vacancyName} га ишга олишни сўрамоқда</h3> </br> <h3><strong>Телефон номери: </strong> <a href="tel:${data?.tel}">${data?.tel}</a></h3> </br> <h4><strong>${data?.fullName} хақида:</strong> ${data?.description}</h4>`,
+      });
+      console.log(info);
+      await applied_people.updateOne(data, { $set: data }, { upsert: true });
+      response.success(
+        res,
+        "Бизни танлаганингиздан хурсандмиз, тез орада кўришгунча"
+      );
+    } catch (err) {
+      response.internal(res, undefined, err);
+      console.log(err);
     }
   }
 }
