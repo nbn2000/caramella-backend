@@ -65,4 +65,10 @@ rt.put("/api/change-checked/order", orderControll.toggleCheckedOrder);
 rt.put("/api/change-given/order", orderControll.toggleGivenOrder);
 rt.get("/api/get/single-order/:id", orderControll.getSingleOrder);
 
+/* SEND CONTACT TO ADMIN */
+
+const contactControll = require("./controller/contact.controll");
+
+rt.post("/api/send/contact", contactControll.sendContact);
+
 module.exports = rt;

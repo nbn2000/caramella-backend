@@ -80,7 +80,6 @@ class VacancyControll {
       const vacancyData = await vacancy.findOne({
         _id: new ObjectId(data.vacancyId),
       });
-      console.log(vacancyData);
       if (!vacancyData) {
         return response.notFound(
           res,

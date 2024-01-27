@@ -47,7 +47,6 @@ class CartControll {
     try {
       const { device_id } = req.params;
       const searchResult = await cart.findOne({ device_id: String(device_id) });
-      console.log(searchResult);
       if (!searchResult) {
         response.notFound(res, "Махсулот топилмади", undefined);
         return;
@@ -61,33 +60,30 @@ class CartControll {
   /* CHANGE CART AMOUNT*/
   async changeCartAmount(req, res) {
     try {
-      const data = req?.body;
-      const cartResult = await cart.findOne({ device_id: data?.device_id });
-      if (cartResult === null) {
-        response.notFound(res, "Махсулот топилмади", undefined);
-      } else {
-        const newCart = cartResult;
-        const id = newCart._id;
-        delete newCart._id;
-        const card = newCart.cart.filter(
-          (i) => i._id.toString() === data?.product_id
-        );
-        card[0].amount = data?.amount;
+      const { device_id, product_id, amount } = req?.body;
+      const filter = {
+        device_id: device_id,
+        "cart._id": new ObjectId(product_id),
+      };
+      const update = {
+        $set: { "cart.$.amount": amount },
+      };
+      const result = await cart.updateOne(filter, update);
 
-        const notSelectedCard = newCart.cart.filter(
-          (i) => i._id.toString() !== data?.product_id
-        );
-        newCart.cart = [...card, ...notSelectedCard];
-        const totalPrice = newCart.cart.reduce((acc, item) => {
-          const itemPrice = parseInt(item.price) || 0;
-          const itemAmount = item.amount || 0;
-          return acc + itemPrice * itemAmount;
-        }, 0);
-        newCart.total_price = totalPrice;
-        await cart.updateOne(...[{ _id: new ObjectId(id) }, { $set: newCart }]);
-        response.success(res, "Махсулот муофақиятли яратилди");
+      if (result.matchedCount === 0) {
+        response.notFound(res);
       }
+
+      const doc = await cart.findOne({ device_id });
+
+      const total_price = doc.cart.reduce((total, item) => {
+        return total + item.amount * parseFloat(item.price);
+      }, 0);
+      await cart.updateOne({ device_id }, { $set: { total_price } });
+
+      response.success(res, "Махсулот муофақиятли яратилди");
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }

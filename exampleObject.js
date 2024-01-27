@@ -58,7 +58,7 @@ const cart = {
   _id: new ObjectId("65a510c5dc82e13e14e4db81"),
   device_id: "12412409sdfsdfjsdfpp",
   user: null,
-  total_price: 120,
+  total_price: 200,
   cart: [
     {
       _id: new ObjectId("65a0d890ae80f9ab02446be6"),
@@ -67,9 +67,20 @@ const cart = {
       file: "fijwoeifjowiejfosssdfjosifid",
       files: [Array],
       name: "Tort1",
-      price: "20",
+      price: "50",
       property: [Array],
       amount: 2,
+    },
+    {
+      _id: new ObjectId("65a0d893ae80f9ab02446be6"),
+      category: "weddingCake",
+      description: "nssssssss",
+      file: "fijwoeifjowiejfosssdfjosifid",
+      files: [Array],
+      name: "Tort2",
+      price: "20",
+      property: [Array],
+      amount: 5,
     },
   ],
 };
