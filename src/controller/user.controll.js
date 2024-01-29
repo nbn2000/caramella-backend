@@ -7,6 +7,8 @@ const user = db.collection("users");
 const admin = db.collection("admin");
 const device = db.collection("device");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 class userControll {
   /* ADD NEW USER */
@@ -32,14 +34,21 @@ class userControll {
   /* ADMIN LOGIN */
   async adminSignin(req, res) {
     try {
-      const data = req.body;
-      const login = await admin.findOne({ login: data.login });
+      const { login, password } = req.body;
+      const result = await admin.findOne({ login });
       if (login !== null) {
-        response.success(res, undefined, {
-          token: "r9283ry9fhssod9ufhs9daf8u0a98suf098u43",
-        });
+        const passwordMatch = await bcrypt.compare(password, result?.password);
+        if (passwordMatch) {
+          const token = jwt.sign(
+            { ...result },
+            process.env.SECRET_KEY || "5555"
+          );
+          return response.success(res, undefined, { token });
+        } else {
+          return response.notFound(res, "парол нотўгри киритилди");
+        }
       } else {
-        response.notFound(res);
+        return response.notFound(res, "Логин нотўгри киритилди");
       }
     } catch (err) {
       response.internal(res, undefined, err);
@@ -71,12 +80,12 @@ class userControll {
 
   async singupDevice(req, res) {
     try {
-      const device_id = crypto.randomBytes(8).toString("hex");
-      const token = crypto.randomBytes(4).toString("hex");
+      const device_id = crypto.randomBytes(12).toString("hex");
       await device.insertOne({ device_id });
+      const token = jwt.sign({ device_id }, process.env.SECRET_KEY || "5555");
       response.success(res, undefined, {
         device_id: JSON.stringify(device_id),
-        token: JSON.stringify(token),
+        token,
       });
     } catch (err) {
       console.log(err);

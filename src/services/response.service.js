@@ -15,9 +15,9 @@ class response {
   }
 
   async error(res, message, data) {
-    res.status(400).json({
+    res.status(401).json({
       variant: "error",
-      message: message || "error",
+      message: message || "Unauthorized",
       innerData: data || null,
     });
   }
