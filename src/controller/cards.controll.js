@@ -90,7 +90,6 @@ class CardsControll {
   async getSingleCard(req, res) {
     try {
       const { id } = req.params;
-      console.log(id);
       const data = await product.findOne({ _id: new ObjectId(id) });
       if (data === null) {
         response.notFound(res);

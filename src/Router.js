@@ -55,6 +55,7 @@ rt.post("/api/add/cart", cartControll.addToCart);
 rt.get("/api/get/cart/:device_id", cartControll.getCart);
 rt.patch("/api/change/cart/amount", cartControll.changeCartAmount);
 rt.delete("/api/delete/cart/item", cartControll.deleteCartItem);
+rt.get("/api/check/item", cartControll.checkItem);
 
 /* ORDER CONTROLL */
 const orderControll = require("./controller/order.controll");

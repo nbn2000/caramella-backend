@@ -115,6 +115,31 @@ class CartControll {
       response.internal(res, undefined, err);
     }
   }
+
+  /* CHECK IF ITEM IS EXIST IN CART*/
+  async checkItem(req, res) {
+    try {
+      const { device_id, _id } = await req.query;
+      while (!ObjectId.isValid(_id)) {
+        await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for 100 milliseconds
+      }
+      const foundObject = await cart.findOne({
+        device_id: device_id,
+        cart: {
+          $elemMatch: { _id: new ObjectId(_id) },
+        },
+      });
+      console.log(foundObject);
+      if (foundObject) {
+        response.success(res, undefined, { found: true });
+      } else {
+        response.success(res, undefined, { found: false });
+      }
+    } catch (error) {
+      console.log(error);
+      response.internal(res, undefined, error);
+    }
+  }
 }
 
 module.exports = new CartControll();

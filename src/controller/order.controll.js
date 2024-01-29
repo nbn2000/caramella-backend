@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
 const orders = db.collection("orders");
+const cart = db.collection("cart");
 
 class OrderControll {
   /* GET ORDERS */
@@ -48,6 +49,7 @@ class OrderControll {
       data.checked = false;
       data.given = false;
       await orders.insertOne(data);
+      await cart.deleteOne({ device_id: String(data?.device_id) });
       response.success(res, "Махсулот муофақиятли яратилди", {
         orderNumber: data?.orderNumber,
       });
