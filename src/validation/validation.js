@@ -40,7 +40,7 @@ class Validation {
   }
 
   static async SignUp(req, res, next) {
-    const { schemaSignUp } = require("./schema/schema.SignUp");
+    const  schemaSignUp  = require("./schema/schema.SignUp");
     try {
       const result = await Validation.check(schemaSignUp, req.body);
       if (!result) return next();
