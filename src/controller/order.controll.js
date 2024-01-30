@@ -50,12 +50,12 @@ class OrderControll {
       data.given = false;
       await orders.insertOne(data);
       await cart.deleteOne({ device_id: String(data?.device_id) });
-      response.success(res, "Махсулот муофақиятли яратилди", {
+      response.success(res, "Сизнинг буюртмангиз мувофақиятли жўнатилди", {
         orderNumber: data?.orderNumber,
       });
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
   /* GET ALL ORDERS TO ADMIN */
@@ -69,8 +69,8 @@ class OrderControll {
         response.success(res, undefined, data);
       }
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
 
@@ -85,8 +85,8 @@ class OrderControll {
         response.success(res, undefined, data);
       }
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
 
@@ -103,14 +103,14 @@ class OrderControll {
         if (data !== null) {
           return response.success(res, undefined, data);
         } else {
-          return response.notFound(res, "Order not found");
+          return response.notFound(res);
         }
       } else {
-        return response.notFound(res, "Order not found");
+        return response.notFound(res);
       }
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
 
@@ -125,12 +125,11 @@ class OrderControll {
       if (change.acknowledged !== 0) {
         return response.success(res);
       } else {
-        return response.notFound(res, "Order not found");
+        return response.notFound(res);
       }
-      response.success(res);
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
 }

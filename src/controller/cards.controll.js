@@ -10,8 +10,9 @@ class CardsControll {
       const data = req.body;
       data.createdAt = new Date();
       await product.updateOne(data, { $set: data }, { upsert: true }); // I have used updateOne instead of insertOne because it will prevent dublicate insertion but properies uniqueness will not effact
-      response.success(res, "Махсулот муофақиятли яратилди", undefined);
+      response.success(res, "Махсулот муофақиятли яратилди");
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }
@@ -26,13 +27,13 @@ class CardsControll {
         ...[{ _id: new ObjectId(id) }, { $set: data }]
       );
       if (result.modifiedCount === 0) {
-        response.notFound(res);
+        response.notFound(res, "махсулот топилмади");
       } else {
-        response.success(res, undefined, null);
+        response.success(res, "махсулот мувофақиятли ўзгартирилди", null);
       }
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
 
@@ -41,8 +42,9 @@ class CardsControll {
     try {
       const { _id } = req.body;
       await product.deleteOne({ _id: new ObjectId(_id) });
-      response.success(res);
+      response.success(res, "махсулот мувофақиятли ўчирилди");
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }
@@ -70,6 +72,7 @@ class CardsControll {
         items,
       });
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }
@@ -83,6 +86,7 @@ class CardsControll {
         response.success(res, undefined, { data });
       }
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }

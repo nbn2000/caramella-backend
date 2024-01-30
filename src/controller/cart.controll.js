@@ -36,8 +36,9 @@ class CartControll {
         };
         await cart.updateOne(...[{ _id: new ObjectId(id) }, { $set: newObj }]);
       }
-      response.success(res, "Махсулот муофақиятли яратилди", undefined);
+      response.success(res, "Махсулот муофақиятли саватга тушди");
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }
@@ -51,10 +52,10 @@ class CartControll {
         response.notFound(res, "Махсулот топилмади", undefined);
         return;
       }
-      response.success(res, "Махсулот муофақиятли яратилди", searchResult);
+      response.success(res, "Махсулот муофақиятли топилди", searchResult);
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
   /* CHANGE CART AMOUNT*/
@@ -71,7 +72,7 @@ class CartControll {
       const result = await cart.updateOne(filter, update);
 
       if (result.matchedCount === 0) {
-        response.notFound(res);
+        response.notFound(res, "Махсулот топилмади");
       }
 
       const doc = await cart.findOne({ device_id });
@@ -81,7 +82,7 @@ class CartControll {
       }, 0);
       await cart.updateOne({ device_id }, { $set: { total_price } });
 
-      response.success(res, "Махсулот муофақиятли яратилди");
+      response.success(res, "Махсулот муофақиятли ўзгартирилди");
     } catch (err) {
       console.log(err);
       response.internal(res, undefined, err);
@@ -103,12 +104,12 @@ class CartControll {
         newCart?.cart[0]?._id.toString() === data?.product_id
       ) {
         await cart.deleteOne({ device_id: data?.device_id });
-        response.success(res, "success");
+        response.success(res, "Махсулот муофақиятли ўчирилди");
       } else {
         newCart.cart = card;
         await cart.updateOne(...[{ _id: new ObjectId(id) }, { $set: newCart }]);
         const result = await cart.findOne({ device_id: data?.device_id });
-        response.success(res, "success", result);
+        response.success(res, "Махсулот муофақиятли ўчирилди", result);
       }
     } catch (err) {
       console.log(err);
@@ -129,7 +130,6 @@ class CartControll {
           $elemMatch: { _id: new ObjectId(_id) },
         },
       });
-      console.log(foundObject);
       if (foundObject) {
         response.success(res, undefined, { found: true });
       } else {

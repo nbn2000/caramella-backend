@@ -12,8 +12,9 @@ class VacancyControll {
       const data = req.body;
 
       await vacancy.updateOne(data, { $set: data }, { upsert: true }); // I have used updateOne instead of insertOne because it will prevent dublicate insertion but properies uniqueness will not effact
-      response.success(res, "Махсулот муофақиятли яратилди", undefined);
+      response.success(res, "Вакансия муваффақиятли яратилди", undefined);
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }
@@ -25,9 +26,9 @@ class VacancyControll {
       const id = data._id; // Im first defining id given from mongodb
       delete data._id; // then deleting because mongodb ids are immutable
       await vacancy.updateOne(...[{ _id: new ObjectId(id) }, { $set: data }]);
-      console.log(res);
-      response.success(res, undefined, null);
+      response.success(res, "Вакансия муваффақиятли ўзгартирилди");
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }
@@ -37,8 +38,9 @@ class VacancyControll {
     try {
       const { _id } = req.body;
       await vacancy.deleteOne({ _id: new ObjectId(_id) });
-      response.success(res);
+      response.success(res, "Вакансия муваффақиятли ўчирилди");
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }
@@ -53,6 +55,7 @@ class VacancyControll {
         response.success(res, undefined, { data });
       }
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err);
     }
   }
@@ -109,8 +112,8 @@ class VacancyControll {
         "Бизни танлаганингиздан хурсандмиз, тез орада кўришгунча"
       );
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
 }

@@ -25,7 +25,11 @@ class ContactControll {
       });
       console.log(info);
       await contacted_people.updateOne(data, { $set: data }, { upsert: true });
-      response.success(res, "Махсулот муофақиятли яратилди", undefined);
+      response.success(
+        res,
+        "Сизнинг сўровингиз мувофақиятил жўнатилди",
+        undefined
+      );
     } catch (err) {
       response.internal(res, undefined, err);
     }

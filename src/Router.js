@@ -5,10 +5,10 @@ const { auth } = require("./middlewere/auth");
 /* USER CONTROLL */
 const userControll = require("./controller/user.controll");
 
-rt.post("/api/add/user", auth, userControll.signup);
+rt.post("/api/add/user", auth, [validation.SignUp], userControll.signup);
 rt.delete("/api/delete/user", auth, userControll.deleteUser);
 rt.get("/api/getall/user", auth, userControll.getAllUser);
-rt.post("/api/admin/login", userControll.adminSignin);
+rt.post("/api/admin/login", [validation.adminSignin], userControll.adminSignin);
 rt.get("/api/singup/device", userControll.singupDevice);
 
 /* TELEGRAM BOT CONTROLL */
@@ -76,7 +76,12 @@ rt.put(
 rt.delete("/api/delete/vacancy", auth, vacancyControll.deleteVacancy);
 rt.get("/api/getall/vacancy", auth, vacancyControll.getAllVacancy);
 rt.get("/api/getsingle/vacancy/:id", auth, vacancyControll.getSingleVacancy);
-rt.post("/api/applied/vacancy", auth, vacancyControll.appliedVacancy);
+rt.post(
+  "/api/applied/vacancy",
+  auth,
+  [validation.appliedVacancy],
+  vacancyControll.appliedVacancy
+);
 
 /* CART CONTROLL */
 const cartControll = require("./controller/cart.controll");

@@ -22,11 +22,12 @@ class userControll {
         const userInfo = await user.findOne({
           userName: userNameFromPassCode,
         });
-        response.success(res, "You passed from register congrats", userInfo);
+        response.success(res, "Сиз рўйхатдан ўтдингиз, табриклаймиз", userInfo);
       } else {
-        response.notFound(res, "Passcode is incorrect please try again");
+        response.notFound(res, "Парол нотўғри, қайта уриниб кўринг");
       }
     } catch (err) {
+      console.log(err);
       response.internal(res, err);
     }
   }
@@ -45,14 +46,14 @@ class userControll {
           );
           return response.success(res, undefined, { token });
         } else {
-          return response.notFound(res, "парол нотўгри киритилди");
+          return response.notFound(res, "парол нотўғри киритилди");
         }
       } else {
-        return response.notFound(res, "Логин нотўгри киритилди");
+        return response.notFound(res, "Логин нотўғри киритилди");
       }
     } catch (err) {
-      response.internal(res, undefined, err);
       console.log(err);
+      response.internal(res, undefined, err);
     }
   }
 
@@ -72,6 +73,7 @@ class userControll {
       const data = await user.find().toArray();
       response.success(res, undefined, { data });
     } catch (err) {
+      console.log(err);
       response.internal(res, undefined, err?.message);
     }
   }
