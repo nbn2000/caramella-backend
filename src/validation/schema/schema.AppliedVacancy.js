@@ -6,12 +6,12 @@ const schemaAppliedVacancy = {
     },
     fullName: {
       type: "string",
-      maxLength: 5,
-      minLength: 30,
+      minLength: 5,
+      maxLength: 30,
       errorMessage: {
         type: "Исм Шариф формати нотўғри",
         minLength: "Алифбо сони 5 та дан кам бўлмаслиги керак",
-        maxLength: "Алифбо сони 25 та дан ошмаслиги керак",
+        maxLength: "Алифбо сони 30 та дан ошмаслиги керак",
       },
     },
     tel: {
@@ -22,7 +22,7 @@ const schemaAppliedVacancy = {
     },
     description: {
       type: "string",
-      maxLength: 3,
+      minLength: 3,
       errorMessage: {
         type: "Изох формати нотўғри",
         minLength: "Алифбо сони 3 та дан кам бўлмаслиги керак",
