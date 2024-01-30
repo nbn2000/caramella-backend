@@ -52,7 +52,7 @@ class Validation {
   }
 
   static async adminSignin(req, res, next) {
-    const { schemaAdminSignin } = require("./schema/schema.AdminSignin");
+    const  schemaAdminSignin  = require("./schema/schema.AdminSignin");
     try {
       const result = await Validation.check(schemaAdminSignin, req.body);
       if (!result) return next();
