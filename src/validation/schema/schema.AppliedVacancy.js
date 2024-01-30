@@ -6,8 +6,8 @@ const schemaAppliedVacancy = {
     },
     fullName: {
       type: "string",
-      maxLength: 5,
-      minLength: 30,
+      minLength: 5,
+      maxLength: 30,
       errorMessage: {
         type: "Исм Шариф формати нотўғри",
         minLength: "Алифбо сони 5 та дан кам бўлмаслиги керак",
@@ -22,7 +22,7 @@ const schemaAppliedVacancy = {
     },
     description: {
       type: "string",
-      maxLength: 3,
+      minLength: 3,
       errorMessage: {
         type: "Изох формати нотўғри",
         minLength: "Алифбо сони 3 та дан кам бўлмаслиги керак",
@@ -30,7 +30,7 @@ const schemaAppliedVacancy = {
     },
   },
   additionalProperties: false,
-  required: ["fullName", "tel", "description"],
+  required: ["fullName", "tel", "description", "vacancyId"],
 };
 
 module.exports = schemaAppliedVacancy;

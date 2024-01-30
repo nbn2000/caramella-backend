@@ -8,7 +8,7 @@ class Validation {
     return new Promise((res, rej) => {
       try {
         const error = ajv.validate(schema, data);
-        if (!error) res(ajv.errors[0].message);
+        if (!error) return res(ajv.errors[0].message);
         res(null);
       } catch (err) {
         rej(err);
@@ -64,7 +64,7 @@ class Validation {
   }
 
   static async appliedVacancy(req, res, next) {
-    const { schemaAppliedVacancy } = require("./schema/schema.AppliedVacancy");
+    const schemaAppliedVacancy = require("./schema/schema.AppliedVacancy");
     try {
       const result = await Validation.check(schemaAppliedVacancy, req.body);
       if (!result) return next();
