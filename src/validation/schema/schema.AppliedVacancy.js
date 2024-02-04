@@ -11,7 +11,7 @@ const schemaAppliedVacancy = {
       errorMessage: {
         type: "Исм Шариф формати нотўғри",
         minLength: "Алифбо сони 5 та дан кам бўлмаслиги керак",
-        maxLength: "Алифбо сони 25 та дан ошмаслиги керак",
+        maxLength: "Алифбо сони 30 та дан ошмаслиги керак",
       },
     },
     tel: {

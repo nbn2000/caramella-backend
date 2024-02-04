@@ -65,6 +65,7 @@ class Validation {
 
   static async appliedVacancy(req, res, next) {
     const schemaAppliedVacancy = require("./schema/schema.AppliedVacancy");
+
     try {
       const result = await Validation.check(schemaAppliedVacancy, req.body);
       if (!result) return next();
