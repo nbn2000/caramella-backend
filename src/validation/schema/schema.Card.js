@@ -23,13 +23,14 @@ const schemaCard = {
     category: {
       type: "string",
       enum: [
-        "weddingCake",
-        "macarons",
-        "biscuits",
-        "customCake",
-        "cupcake",
-        "birthdayCake",
+        "biscuit-type",
+        "half-ready",
+        "cookie",
+        "layer-type",
+        "salad",
+        "mousse",
       ],
+      // 1. Бисквитний, 2. Ярим таййор, 3. Пиченный, 4. Кат-катли, 5. Салат, 6. Муссвий
       errorMessage: {
         type: "Махсулот тоифаси 'string' холатида болиши керак ",
         enum: "Махсулот тоифаси фақатгина куъидаги тофани қабул килади ['weddingCake','macarons','biscuits','customCake','cupcake','birthdayCake']",
