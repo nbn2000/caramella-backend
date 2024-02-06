@@ -84,7 +84,7 @@ class userControll {
     try {
       const device_id = crypto.randomBytes(12).toString("hex");
       await device.insertOne({ device_id });
-      const token = jwt.sign({ device_id }, process.env.SECRET_KEY || "5555");
+      const token = jwt.sign({ device_id }, process.env.SECRET_KEY);
       response.success(res, undefined, {
         device_id: JSON.stringify(device_id),
         token,
