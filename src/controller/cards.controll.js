@@ -113,6 +113,7 @@ class CardsControll {
       const filter = { createdAt: { $gte: dateSevenDaysAgo } }; //filter to check if its later then sevendays before from today
 
       const data = await product.find(filter).limit(3).toArray();
+
       response.success(res, undefined, data);
     } catch (error) {
       console.log(error);
